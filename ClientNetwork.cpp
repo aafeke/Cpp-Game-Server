@@ -41,7 +41,7 @@ ClientNetwork::ClientNetwork(void) {
         ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
 
         if(ConnectSocket == INVALID_SOCKET) {
-            printf("Socket failed with error: %d\n", WSAGetLastError());
+            printf("connect Socket failed with error: %d\n", WSAGetLastError());
             WSACleanup();
             exit(1);
         }
