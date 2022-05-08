@@ -8,7 +8,9 @@
 #include <stdio.h>
 
 // Size of the buffer
+#ifndef DEFAULT_BUFLEN
 #define DEFAULT_BUFLEN 512
+#endif
 
 // Port to connect sockets
 #define DEFAULT_PORT "6881"
