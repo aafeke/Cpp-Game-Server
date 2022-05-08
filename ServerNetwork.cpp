@@ -1,4 +1,5 @@
 #include "ServerNetwork.h"
+#include <stdio.h>
 
 ServerNetwork::ServerNetwork(void) {
     // Create WSADATA object
@@ -39,10 +40,10 @@ ServerNetwork::ServerNetwork(void) {
     }
 
     // Define socket for connecting to the server
-    ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_socktype);
+    ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 
     if (ListenSocket == INVALID_SOCKET) {
-        printf("socket failed with error: %ld\n", WSAGetLastError());
+        printf("listen socket failed with error: %ld\n", WSAGetLastError());
         freeaddrinfo(result);
         WSACleanup();
         exit(1);
@@ -51,6 +52,17 @@ ServerNetwork::ServerNetwork(void) {
     // Set the socket mode to non-blocking
     u_long iMode = 1;
     iResult = ioctlsocket(ListenSocket, FIONBIO, &iMode);
+
+    if (iResult == SOCKET_ERROR) {
+        printf("bind failed with error: %d\n", WSAGetLastError());
+        freeaddrinfo(result);
+        closesocket(ListenSocket);
+        WSACleanup();
+        exit(1);
+    }
+
+    // Setup the TCP listening socket
+    iResult = bind( ListenSocket, result->ai_addr, (int)result->ai_addrlen);
 
     if (iResult == SOCKET_ERROR) {
         printf("bind failed with error: %d\n", WSAGetLastError());
