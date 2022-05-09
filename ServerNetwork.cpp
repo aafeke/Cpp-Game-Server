@@ -100,3 +100,21 @@ bool ServerNetwork::acceptNewClient(unsigned int &id) {
     }
     return false;
 }
+
+// Receive incoming data
+// This function will receive data waiting on the socket for 
+// a given client ID and fill the passed buffer (recvbuf) with 
+// the data read from the network.
+int ServerNetwork::receiveData(unsigned int client_id, char * recvbuf) {
+    if( sessions.find(client_id) != sessions.end() ) {
+        SOCKET currentSocket = sessions[client_id];
+        iResult = NetworkServices::receiveMessage(currentSocket, recvbuf, MAX_PACKET_SIZE);
+        
+        if(iResult == 0) {
+            printf("Connection closed\n");
+            closesocket(currentSocket);
+        }
+        return iResult;
+    }
+    return 0;
+}
