@@ -41,6 +41,9 @@ class ServerNetwork {
 
         // Receive incoming data
         int receiveData(unsigned int client_id, char * recvbuff);
+
+        // Send data to all clients
+        void sendToAll(char * packets, int totalsize);
 };
 
 #endif

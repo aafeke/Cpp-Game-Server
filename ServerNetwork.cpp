@@ -118,3 +118,25 @@ int ServerNetwork::receiveData(unsigned int client_id, char * recvbuf) {
     }
     return 0;
 }
+
+// Send data to all clients
+// The client will send an INIT packet, then the server will 
+// send an ACTION packet and upon receipt, the client will send 
+// an ACTION packet, and then the server will receive the 
+// ACTION packet, and send another, and etc.
+void ServerNetwork::sendToAll(char * packets, int totalsize) {
+    SOCKET currentSocket;
+    int iSendResult;
+
+    std::map<unsigned int, SOCKET>::iterator iter;
+
+    for(iter = sessions.begin(); iter != sessions.end(); iter++) {
+        currentSocket = iter->second;
+        iSendResult = NetworkServices::sendMessage(currentSocket, packets, totalsize);
+        
+        if(iSendResult == SOCKET_ERROR) {
+            printf("(sendToAll) send failed with error: %d\n", WSAGetLastError());
+            closesocket(currentSocket);
+        }
+    }
+}
