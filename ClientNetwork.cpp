@@ -80,11 +80,11 @@ ClientNetwork::ClientNetwork(void) {
 
 int ClientNetwork::receivePackets(char * recvbuf) {
     
-    iResult = NetworkServices::receiveMessage(this->ConnectSocket, recvbuf, MAX_PACKET_SIZE);
+    iResult = NetworkServices::receiveMessage(ConnectSocket, recvbuf, MAX_PACKET_SIZE);
 
     if (iResult == 0) {
         printf("(ClientNetwork::receivePackets) Connection closed\n");
-        closesocket(this->ConnectSocket);
+        closesocket(ConnectSocket);
         WSACleanup();
         exit(1);
     }
