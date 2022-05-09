@@ -48,13 +48,29 @@ void ServerGame::receiveFromClients() {
             switch(packet.packet_type) {
                 case INIT_CONNECTION:
                     printf("server received init packet from client %d\n", iter->first);
+                    sendActionPackets();
                     break;
                 case ACTION_EVENT:
                     printf("server received action event packet from client %d\n", iter->first);
+                    sendActionPackets();
                     break;
                 default:
                     printf("error in packet types\n");
             }
         }
     }
+}
+
+// Send action packet
+void ServerGame::sendActionPackets() {
+
+    const unsigned int packet_size = sizeof(Packet);
+    char packet_data[packet_size];
+
+    Packet packet;
+    packet.packet_type = ACTION_EVENT;
+
+    packet.serialize(packet_data);
+
+    network->sendToAll(packet_data, packet_size);
 }

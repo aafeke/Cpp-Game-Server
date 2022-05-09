@@ -20,6 +20,7 @@ class ServerGame {
 
         void update();
         void receiveFromClients();
+        void sendActionPackets();
     
     private:
         // IDs for the clients connecting for the table (map) in ServerNetwork
