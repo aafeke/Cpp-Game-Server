@@ -32,6 +32,9 @@ class ClientNetwork {
         // Constructor / Destructor
         ClientNetwork(void);
         ~ClientNetwork(void);
+
+        // Receive action packets
+        int receivePackets(char *);
 };
 
 #endif

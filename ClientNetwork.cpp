@@ -77,3 +77,17 @@ ClientNetwork::ClientNetwork(void) {
         exit(1);
     }
 }
+
+int ClientNetwork::receivePackets(char * recvbuf) {
+    
+    iResult = NetworkServices::receiveMessage(this->ConnectSocket, recvbuf, MAX_PACKET_SIZE);
+
+    if (iResult == 0) {
+        printf("(ClientNetwork::receivePackets) Connection closed\n");
+        closesocket(this->ConnectSocket);
+        WSACleanup();
+        exit(1);
+    }
+    
+    return iResult;
+}
