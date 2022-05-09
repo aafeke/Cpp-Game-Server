@@ -55,7 +55,7 @@ void ServerGame::receiveFromClients() {
                     sendActionPackets();
                     break;
                 default:
-                    printf("error in packet types\n");
+                    printf("(ServerGame) error in packet types\n");
             }
         }
     }
