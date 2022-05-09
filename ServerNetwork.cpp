@@ -126,9 +126,8 @@ int ServerNetwork::receiveData(unsigned int client_id, char * recvbuf) {
 // ACTION packet, and send another, and etc.
 void ServerNetwork::sendToAll(char * packets, int totalsize) {
     SOCKET currentSocket;
-    int iSendResult;
-
     std::map<unsigned int, SOCKET>::iterator iter;
+    int iSendResult;
 
     for(iter = sessions.begin(); iter != sessions.end(); iter++) {
         currentSocket = iter->second;
