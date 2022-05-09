@@ -42,5 +42,6 @@ void clientLoop(void) {
     while(true) {
         // Do game stuff.
         // Will later call client->update();
+        client->update();
     }
 }
