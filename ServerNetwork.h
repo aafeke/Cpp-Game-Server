@@ -6,6 +6,7 @@
 #include "NetworkServices.h"
 #include <ws2tcpip.h>
 #include <map>
+#include "NetworkData.h"
 
 using namespace std;
 
@@ -37,6 +38,9 @@ class ServerNetwork {
 
         // Accept new connections
         bool acceptNewClient(unsigned int &id);
+
+        // Receive incoming data
+        int receiveData(unsigned int client_id, char * recvbuff);
 };
 
 #endif

@@ -10,6 +10,7 @@ the information about the clients on the network.
 #define SERVER_GAME_H
 
 #include "ServerNetwork.h"
+#include "NetworkData.h"
 
 class ServerGame {
 
@@ -18,6 +19,7 @@ class ServerGame {
         ~ServerGame(void);
 
         void update();
+        void receiveFromClients();
     
     private:
         // IDs for the clients connecting for the table (map) in ServerNetwork
@@ -27,6 +29,9 @@ class ServerGame {
 
         // The ServerNetwork object
         ServerNetwork * network;
+
+        // Data buffer
+        char network_data[MAX_PACKET_SIZE];
 };
 
 #endif
