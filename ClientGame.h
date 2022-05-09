@@ -4,6 +4,7 @@
 #include <winsock2.h>
 #include <windows.h>
 #include "ClientNetwork.h"
+#include "NetworkData.h"
 
 class ClientGame {
 
