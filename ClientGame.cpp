@@ -15,6 +15,10 @@ ClientGame::ClientGame(void) {
     NetworkServices::sendMessage(network->ConnectSocket, packet_data, packet_size);
 }
 
+ClientGame::~ClientGame(void) {
+    delete this->network;
+}
+
 void ClientGame::sendActionPackets() {
 
     // Send action packets to the server
@@ -44,7 +48,7 @@ void ClientGame::update() {
     }
 
     int i = 0;
-    while(i < (unsigned int)data_length) {
+    while(i < data_length) {
         packet.deserialize( &(network_data[i]) );
         i += sizeof(Packet);
 

@@ -17,9 +17,10 @@
 #define DEFAULT_PORT "6881"
 
 // Needs to be linked with 'Ws2_32.lib', 'Mswsock.lib' and 'Advapi32.lib'
-#pragma comment (lib, "Ws2_32.lib")
-#pragma comment (lib, "Mswsock.lib")
-#pragma comment (lib, "Advapi32.lib")
+// This is for MSVC
+// #pragma comment (lib, "Ws2_32.lib")
+// #pragma comment (lib, "Mswsock.lib")
+// #pragma comment (lib, "Advapi32.lib")
 
 class ClientNetwork {
     public:

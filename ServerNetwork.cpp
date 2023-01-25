@@ -6,8 +6,8 @@ ServerNetwork::ServerNetwork(void) {
     WSADATA wsaData;
 
     // Sockets for the server
-    ListenSocket = NULL;
-    ClientSocket = NULL;
+    ListenSocket = INVALID_SOCKET;
+    ClientSocket = INVALID_SOCKET;
 
     // Address info for the server to listen
     struct addrinfo * result = NULL;
@@ -43,7 +43,7 @@ ServerNetwork::ServerNetwork(void) {
     ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 
     if (ListenSocket == INVALID_SOCKET) {
-        printf("listen socket failed with error: %ld\n", WSAGetLastError());
+        printf("listen socket failed with error: %d\n", WSAGetLastError());
         freeaddrinfo(result);
         WSACleanup();
         exit(1);
@@ -85,6 +85,22 @@ ServerNetwork::ServerNetwork(void) {
         exit(1);
     }
 }
+
+ServerNetwork::~ServerNetwork(void) {
+    closesocket(this->ClientSocket);
+    this->ClientSocket = INVALID_SOCKET;
+
+    // Close session sockets 
+    for (auto& i : this->sessions) {
+        if (i.second != INVALID_SOCKET) {
+            closesocket(i.second);
+            i.second = INVALID_SOCKET;
+        }
+    }
+
+    closesocket(this->ListenSocket);
+    this->ListenSocket = INVALID_SOCKET;
+};
 
 // Accept new connections
 bool ServerNetwork::acceptNewClient(unsigned int &id) {

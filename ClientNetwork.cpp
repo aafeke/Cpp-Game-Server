@@ -1,6 +1,5 @@
 #include "ClientNetwork.h"
 
-
 // Implement the declared constructor in 'ClientNetwork.h'
 ClientNetwork::ClientNetwork(void) {
     // Create WSADATA object
@@ -77,6 +76,10 @@ ClientNetwork::ClientNetwork(void) {
         exit(1);
     }
 }
+
+ClientNetwork::~ClientNetwork(void) {
+    closesocket(this->ConnectSocket);
+};
 
 int ClientNetwork::receivePackets(char * recvbuf) {
     

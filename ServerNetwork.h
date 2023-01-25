@@ -10,7 +10,8 @@
 
 using namespace std;
 
-#pragma comment (lib, "Ws2_32.lib")
+// This is for MSVC
+// #pragma comment (lib, "Ws2_32.lib")
 
 #define DEFAULT_PORT "6881"
 
