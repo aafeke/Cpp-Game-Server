@@ -1,5 +1,6 @@
-#include "ServerNetwork.h"
 #include <stdio.h>
+
+#include "server/include/ServerNetwork.h"
 
 ServerNetwork::ServerNetwork(void) {
     // Create WSADATA object
@@ -142,11 +143,10 @@ int ServerNetwork::receiveData(unsigned int client_id, char * recvbuf) {
 // ACTION packet, and send another, and etc.
 void ServerNetwork::sendToAll(char * packets, int totalsize) {
     SOCKET currentSocket;
-    std::map<unsigned int, SOCKET>::iterator iter;
     int iSendResult;
 
-    for(iter = sessions.begin(); iter != sessions.end(); iter++) {
-        currentSocket = iter->second;
+    for(auto& iter : this->sessions) {
+        currentSocket = iter.second;
         iSendResult = NetworkServices::sendMessage(currentSocket, packets, totalsize);
         
         if(iSendResult == SOCKET_ERROR) {

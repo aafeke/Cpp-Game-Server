@@ -3,12 +3,11 @@
 
 #include <winsock2.h>
 #include <windows.h>
-#include "NetworkServices.h"
 #include <ws2tcpip.h>
 #include <map>
-#include "NetworkData.h"
 
-using namespace std;
+#include "NetworkServices.h"
+#include "NetworkData.h"
 
 // This is for MSVC
 // #pragma comment (lib, "Ws2_32.lib")

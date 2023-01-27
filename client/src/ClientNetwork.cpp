@@ -1,7 +1,9 @@
-#include "ClientNetwork.h"
+#include <string>
+
+#include "client/include/ClientNetwork.h"
 
 // Implement the declared constructor in 'ClientNetwork.h'
-ClientNetwork::ClientNetwork(void) {
+ClientNetwork::ClientNetwork(std::string&& address) {
     // Create WSADATA object
     WSADATA wsaData;
 
@@ -26,7 +28,7 @@ ClientNetwork::ClientNetwork(void) {
     hints.ai_protocol = IPPROTO_TCP;
 
     // Resolve server address and port
-    iResult = getaddrinfo("127.0.0.1", DEFAULT_PORT, &hints, &result);
+    iResult = getaddrinfo(address.c_str(), DEFAULT_PORT, &hints, &result);
 
     if(iResult != 0) {
         printf("getaddrinfo failed with error: %d\n", iResult);

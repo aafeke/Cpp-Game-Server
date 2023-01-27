@@ -1,11 +1,12 @@
 #ifndef CLIENT_NETWORK_H
 #define CLIENT_NETWORK_H
 
+#include <string>
 #include <winsock2.h>
 #include <windows.h>
-#include "NetworkServices.h"
 #include <ws2tcpip.h>
-#include <stdio.h>
+
+#include "NetworkServices.h"
 #include "NetworkData.h"
 
 // Size of the buffer
@@ -31,7 +32,7 @@ class ClientNetwork {
         SOCKET ConnectSocket;
 
         // Constructor / Destructor
-        ClientNetwork(void);
+        ClientNetwork(std::string&& address);
         ~ClientNetwork(void);
 
         // Receive action packets

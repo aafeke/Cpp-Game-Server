@@ -1,7 +1,9 @@
-#include "ClientGame.h"
+#include <string>
 
-ClientGame::ClientGame(void) {
-    network = new ClientNetwork();
+#include "client/include/ClientGame.h"
+
+ClientGame::ClientGame(std::string&& address) {
+    network = new ClientNetwork(std::forward<std::string>(address));
 
     // Send init packet
     const unsigned int packet_size = sizeof(Packet);
