@@ -1,0 +1,4 @@
+checks:
+    modernize-*
+    portability-*
+    cppcoreguidelines
