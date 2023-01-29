@@ -4,7 +4,7 @@ TESTSRC		  = ./test
 TARGET 	  	  = main.exe
 CXX       	  = g++
 CXXFLAGS  	  = -g -c -pedantic -std=c++17 -Wall -Wextra -Wconversion
-LDFLAGS   	  = -lWs2_32 -lMswsock -lAdvapi32
+LDFLAGS   	  = -static-libgcc -static-libstdc++ -lWs2_32 -lMswsock -lAdvapi32 -static -lpthread
 
 # Server
 SERVERSRC 	  = ./server/src
