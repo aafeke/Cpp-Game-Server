@@ -1,3 +1,6 @@
+#include <windows.h>
+#include <winsock2.h>
+
 #include "NetworkServices.h"
 
 int NetworkServices::sendMessage(SOCKET curSocket, char * message, int messageSize) {

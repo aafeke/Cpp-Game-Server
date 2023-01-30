@@ -1,29 +1,49 @@
-SRC   	      = .
-INCLUDE   	  = .
-TESTSRC		  = ./test
-TARGET 	  	  = main.exe
-CXX       	  = g++
-CXXFLAGS  	  = -g -c -pedantic -std=c++17 -Wall -Wextra -Wconversion
-LDFLAGS   	  = -static-libgcc -static-libstdc++ -lWs2_32 -lMswsock -lAdvapi32 -static -lpthread
+ifeq ($(OS),Windows_NT) 
+isWin 	  	  := 1
+else
+isWin     	  := 0
+endif
+
+SRC   	      := .
+INCLUDE   	  := .
+TESTSRC		  := ./test
+CXX       	  := g++
+CXXFLAGS  	  := -g -c -pedantic -std=c++17 -Wall -Wextra -Wconversion
+
+ifeq ($(isWin),1)
+LDFLAGS   	  := -static-libgcc -static-libstdc++ -lWs2_32 -lMswsock -lAdvapi32 -static -lpthread
+TARGETEXT	  := .exe
+MOVE 		  := move /Y
+else
+LDFLAGS   	  := -static -lpthread
+TARGETEXT	  :=
+MOVE 		  := mv
+endif
 
 # Server
-SERVERSRC 	  = ./server/src
-SERVERINCLUDE = ./server/include
-SERVEROBJ 	  = ./server/obj
+SERVERSRC 	  := ./server/src
+SERVERINCLUDE := ./server/include
+SERVEROBJ 	  := ./server/obj
 
 #Client
-CLIENTSRC 	  = ./client/src
-CLIENTINCLUDE = ./client/include
-CLIENTOBJ 	  = ./client/obj
+CLIENTSRC 	  := ./client/src
+CLIENTINCLUDE := ./client/include
+CLIENTOBJ 	  := ./client/obj
 
 # Targets
-SERVERTARGET  = server.exe
-CLIENTTARGET  = client.exe
+SERVERTARGET  := server$(TARGETEXT)
+CLIENTTARGET  := client$(TARGETEXT)
+TARGET 	  	  := main$(TARGETEXT)
 
 test: $(TARGET)
 
+ifeq ($(isWin),1)
 clean:
 	del $(TARGET) & del $(SERVERTARGET) & del $(CLIENTTARGET)
+else
+clean:
+	rm $(TARGET) ; rm $(SERVERTARGET) ; rm $(CLIENTTARGET)
+endif
 
 server: $(SERVERTARGET)
 
@@ -35,14 +55,14 @@ client: $(CLIENTTARGET)
 
 $(SERVEROBJ)/*.o: $(SERVERSRC)/*.* $(SRC)/*.cpp $(SERVERINCLUDE)/*.h $(INCLUDE)/*.h
 	$(CXX) $(CXXFLAGS) $(SERVERSRC)/*.* $(SRC)/*.cpp -I$(SERVERINCLUDE) -I$(INCLUDE)
-	move /Y ./*.o $(SERVEROBJ)
+	$(MOVE) ./*.o $(SERVEROBJ)
 
 $(SERVERTARGET): $(SERVEROBJ)/*.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 
 $(CLIENTOBJ)/*.o: $(CLIENTSRC)/*.* $(SRC)/*.cpp $(CLIENTINCLUDE)/*.h $(INCLUDE)/*.h
 	$(CXX) $(CXXFLAGS) $(CLIENTSRC)/*.* $(SRC)/*.cpp -I$(CLIENTINCLUDE) -I$(INCLUDE)
-	move /Y ./*.o $(CLIENTOBJ)
+	$(MOVE) ./*.o $(CLIENTOBJ)
 
 $(CLIENTTARGET): $(CLIENTOBJ)/*.o
 	$(CXX) $^ $(LDFLAGS) -o $@

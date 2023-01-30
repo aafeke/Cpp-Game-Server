@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "server/include/ServerNetwork.h"
+#include "Sockets.h"
 
 ServerNetwork::ServerNetwork(void) {
     // Create WSADATA object

@@ -5,8 +5,8 @@
                            // before including the "windows.h" apparently.
 
 #pragma once
-#include <winsock2.h>
-#include <windows.h>
+//#include <winsock2.h>
+//#include <windows.h>
 
 class NetworkServices {
     public:

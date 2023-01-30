@@ -8,8 +8,8 @@ ClientNetwork::ClientNetwork(std::string&& address) {
     WSADATA wsaData;
 
     // Socket (Initially invalid)
-    ConnectSocket = INVALID_SOCKET;
-
+    this->ConnectSocket = INVALID_SOCKET;
+ 
     // Struct to hold address info for socket to connect to
     struct addrinfo *result = NULL, *ptr = NULL, hints;
 
@@ -37,6 +37,7 @@ ClientNetwork::ClientNetwork(std::string&& address) {
     }
 
     // Attempt to connect to an address until one succeeds
+    // Normally this would be populated with different server addrinfo structs.
     for(ptr=result; ptr != NULL; ptr=ptr->ai_next) {
         // Define the socket
         ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
