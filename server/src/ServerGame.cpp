@@ -35,14 +35,14 @@ void ServerGame::receiveFromClients() {
     // Iterate through all clients
     for (auto& iter : this->network->sessions) {    
         // Get the data for that client
-        int data_length = network->receiveData(iter.first, network_data);
+        ssize_t data_length = network->receiveData(iter.first, network_data);
 
         if(data_length <= 0) {
             // No data received
             continue;
         }
 
-        int i = 0;
+        ssize_t i = 0;
         while(i < data_length) {
             packet.deserialize( &(network_data[i]) );
             i += sizeof(Packet);

@@ -15,8 +15,8 @@ LDFLAGS   	  := -static-libgcc -static-libstdc++ -lWs2_32 -lMswsock -lAdvapi32 -
 TARGETEXT	  := .exe
 MOVE 		  := move /Y
 else
-LDFLAGS   	  := -static -lpthread
-TARGETEXT	  :=
+LDFLAGS   	  := -Wl,-Bstatic,-lpthread -Wl,-Bdynamic
+TARGETEXT	  := _nix
 MOVE 		  := mv
 endif
 
@@ -39,10 +39,12 @@ test: $(TARGET)
 
 ifeq ($(isWin),1)
 clean:
-	del $(TARGET) & del $(SERVERTARGET) & del $(CLIENTTARGET)
+	del $(TARGET)   & del $(SERVERTARGET) & del $(CLIENTTARGET)
+	cd $(SERVEROBJ) & del *.o & cd ../.. 
+	cd $(CLIENTOBJ) & del *.o & cd ../..
 else
 clean:
-	rm $(TARGET) ; rm $(SERVERTARGET) ; rm $(CLIENTTARGET)
+	rm $(TARGET) ; rm $(SERVERTARGET) ; rm $(CLIENTTARGET) ; rm $(SERVEROBJ)/*.o ; rm $(CLIENTOBJ)/*.o
 endif
 
 server: $(SERVERTARGET)

@@ -1,22 +1,10 @@
 #ifndef SERVER_NETWORK_H
 #define SERVER_NETWORK_H
 
-#include <winsock2.h>
-#include <windows.h>
-#include <ws2tcpip.h>
 #include <map>
 
-#include "NetworkServices.h"
 #include "NetworkData.h"
-
-// This is for MSVC
-// #pragma comment (lib, "Ws2_32.lib")
-
-#define DEFAULT_PORT "6881"
-
-#ifndef DEFAULT_BUFLEN
-#define DEFAULT_BUFLEN 512
-#endif
+#include "NetworkServices.h"
 
 class ServerNetwork {
 
@@ -40,7 +28,7 @@ class ServerNetwork {
         bool acceptNewClient(unsigned int &id);
 
         // Receive incoming data
-        int receiveData(unsigned int client_id, char * recvbuff);
+        ssize_t receiveData(unsigned int client_id, char * recvbuff);
 
         // Send data to all clients
         void sendToAll(char * packets, int totalsize);

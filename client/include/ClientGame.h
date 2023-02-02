@@ -2,8 +2,6 @@
 #define CLIENT_GAME_H
 
 #include <string>
-#include <winsock2.h>
-#include <windows.h>
 
 #include "ClientNetwork.h"
 #include "NetworkData.h"

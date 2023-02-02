@@ -2,20 +2,9 @@
 #define CLIENT_NETWORK_H
 
 #include <string>
-#include <winsock2.h>
-#include <windows.h>
-#include <ws2tcpip.h>
 
-#include "NetworkServices.h"
 #include "NetworkData.h"
-
-// Size of the buffer
-#ifndef DEFAULT_BUFLEN
-#define DEFAULT_BUFLEN 512
-#endif
-
-// Port to connect sockets
-#define DEFAULT_PORT "6881"
+#include "NetworkServices.h"
 
 // Needs to be linked with 'Ws2_32.lib', 'Mswsock.lib' and 'Advapi32.lib'
 // This is for MSVC
@@ -26,7 +15,7 @@
 class ClientNetwork {
     public:
         // For error checking function calls in Winsock library
-        int iResult;
+        // int iResult;
 
         // Socket for client to connect server
         SOCKET ConnectSocket;
@@ -36,7 +25,7 @@ class ClientNetwork {
         ~ClientNetwork(void);
 
         // Receive action packets
-        int receivePackets(char *);
+        ssize_t receivePackets(char *);
 };
 
 #endif

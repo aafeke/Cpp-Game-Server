@@ -42,14 +42,14 @@ void ClientGame::sendActionPackets() {
 void ClientGame::update() {
 
     Packet packet;
-    int data_length = network->receivePackets(network_data);
+    ssize_t data_length = network->receivePackets(network_data);
 
     if(data_length <= 0) {
         // no data received
         return;
     }
 
-    int i = 0;
+    ssize_t i = 0;
     while(i < data_length) {
         packet.deserialize( &(network_data[i]) );
         i += sizeof(Packet);
